@@ -150,9 +150,12 @@ Content - это массив карт. тут все просто - они вы
 ## entetaiment title card
     # TODO
 
+## specs card
+Карта "Особенности"
+
 # route card
 Карта маршрута тура
-
+http://take.ms/R9L65
 
     $route_card:
       # ..
@@ -178,7 +181,7 @@ Content - это массив карт. тут все просто - они вы
               # но чаще всего -  [1] => "День 1"
               days_numbers: 
                 [
-                  item: {type: 'number || [array] || {range}'}
+                  item: {type: 'number || [array] || $range '}
                 ]
               description: {type: 'string', required: true}
               # тоже непростой концепт
@@ -197,6 +200,7 @@ Content - это массив карт. тут все просто - они вы
 
 ## media card
 Карта медиа
+http://take.ms/BMsiM
     
     $meadi_card:
       # ..
@@ -216,6 +220,7 @@ Content - это массив карт. тут все просто - они вы
       title: {type: 'string', required: true}
       alt: {type: 'string', default: @title}
       # опциональное описание
+      # будет выводится в лайтбоксе когда нужно
       description: {type: 'string'}
 
 
@@ -229,8 +234,11 @@ Content - это массив карт. тут все просто - они вы
 ## video
 
     # видео объект
+    # http://take.ms/5ekI0
     $video
       description: {type: 'string'}
+      # мы сами конструируем видео-фрейм на клиенте
+      # все что нужно это провайдер (ютуб/вимео) и id видео
       video_id: {type: 'string', required: true}
       video_provider: {type: 'string', required: true, default: 'vimeo'} 
 
@@ -238,6 +246,7 @@ Content - это массив карт. тут все просто - они вы
 ## photo gallery
 
     # фотогаллерея
+    # http://take.ms/zdeOP
     $photo_gallery:
       title: {type: 'string', default: 'Фотографии'}
       description: {type: 'string'}

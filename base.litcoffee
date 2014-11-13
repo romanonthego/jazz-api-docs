@@ -28,6 +28,9 @@
             currency: {type: 'string', required: true}
             ammount: {type: 'number', req: true}
         ]
+      # Инфа о которой нужно подумать
+      ocupancy: {type: ToDo }
+
       
       # информация для shema.org - google и прочее
       schema:
@@ -63,3 +66,5 @@
         price: 
           ammount: {type: 'number'}
           currency: {type: 'string'}
+
+

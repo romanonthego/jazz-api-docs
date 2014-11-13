@@ -9,6 +9,7 @@
       content: {type: '$content', required: true} # of cards - will be rendered in order in main panel 
       aside: {type: '$aside'} # of cards - will be rendered at sidebar
 
+
 ## Meta structure
 Мета информация об объекте. 
 Будет, в основном включена в head страницы, а так же для валидации урла, и прочее
@@ -131,12 +132,14 @@ Content - это массив карт. тут все просто - они вы
         # объединяются на клиенте
         # ['Норвегия', 'Швеция'] => "Норвегия и Швеция"
         locations: 
-          type: '[array]'
-          item: {type: 'string'}
+          [
+            item: {type: 'string'}
+          ]
         text: {type: 'string', required: true, format: 'html'}
         photos:
-          type: '[array]'
-          item: {type: "$photo"}
+          [
+            item: {type: "$photo"}
+          ]
 
 ## tour title card
     # TODO
@@ -147,7 +150,49 @@ Content - это массив карт. тут все просто - они вы
 ## entetaiment title card
     # TODO
 
+# route card
+Карта маршрута тура
 
+
+    $route_card:
+      # ..
+      content:
+        # объект для постраения карты
+        map:
+          # описание карты - начальные координаты центра, зум, другие настройки
+          meta: {type: '{object}'}
+          # ноды на карте - координаты, содержимое баблов и прочее
+          # TODO
+          waypoints:
+            [
+              item: {type: '$map_point'}
+            ]
+        days:
+          [
+            item:
+              # этот немного сложный
+              # нам нужно поддерживать не только "День 1" и "День 2"
+              # но и "Дни 1-4", "День 1 и 2" и "День 1 и 5-7"
+              # скорее всего не понадобится но я бы хотел иметь эту гибкость уже в системе
+              # так [1, [2,3],{start: 7, end: 12}] => "Дни 1-3 и 7-12"
+              # но чаще всего -  [1] => "День 1"
+              days_numbers: 
+                [
+                  item: {type: 'number || [array] || {range}'}
+                ]
+              description: {type: 'string', required: true}
+              # тоже непростой концепт
+              # к дню можно прицепить любые объекты и их показывать
+              # например отель
+              # экскурсию, ресторан
+              # экскурсию или ресторан которые можно купить дополнительно
+              # фотогралерею
+              # видео
+              attached_objects: 
+                [
+                  item: {type: '$inline_object'}
+                ]
+          ]
 
 
 # Reusable objects
@@ -158,6 +203,25 @@ Content - это массив карт. тут все просто - они вы
       url: {type: 'string', required: true, format: 'url'}
       title: {type: 'string', required: true}
       alt: {type: 'string', default: @title}
+      # опциональное описание
+      description: {type: 'string'}
+
+
+## range 
+
+    # это объект который задается началом и концом
+    $range:
+      start: {type: 'number', required: true}
+      end: {type: 'number', required: true}
+
+
+## inline object
+  Объект прицепляемый как "инлайновый" (прошу прощения за тавтологию)
+  Выглядит вот так - http://take.ms/lq21q
+  или так: http://take.ms/kPSXM
+
+  тут задачка посложнее - показать общий интерфей для таких объектов
+
 
 
 

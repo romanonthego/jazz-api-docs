@@ -95,19 +95,18 @@ Content - это массив карт. тут все просто - они вы
       # собственно контент карты
       # отличается от карты к карте
       # может быть пустым объектом если нам нужно просто отрендерить карту но инфу мы туда не передаем (почему-то)
-      content: {type: 'object', required: true}
+      content: {type: '{object}', required: true}
 
 
-# Сards:
-  
-## simple content cards
+# Сards  
+## simple content card
 Самая простая карта которую можно придумать. Ее содержимое рендерится как html без проверок и валидаций
 
     $simple_content_card:
       # ..
       content: { type: 'string', required: true, format: 'html'}
 
-### пример:
+*пример*:
     
     $simple_content_card:
       type: 'simple_content'
@@ -117,6 +116,40 @@ Content - это массив карт. тут все просто - они вы
       anchor_link: "awesome-card" # tours/15-slug#awesome-card
       menu_title: "Офигенная карта"
       content: "<span>Блаблабла</span>"
+
+
+## title card
+Карта-заголовок страниц. Типа http://take.ms/PXu47
+
+    $title_card:
+      # ..
+      content:
+        #TODO peoples: {type: 'string'}
+        #TODO dates: {type: 'string'}
+        rating: {type: 'number'}
+        # массив локаций к которым относится тур/или другой объект
+        # объединяются на клиенте
+        # ['Норвегия', 'Швеция'] => "Норвегия и Швеция"
+        locations: 
+          type: '[array]'
+          item: {type: 'string'}
+        text: {type: 'string', required: true, format: 'html'}
+        photos:
+          type: '[array]'
+          item: {type: "$photo"}
+
+
+
+# Reusable objects
+
+## photo
+   
+    $photo:
+      url: {type: 'string', required: true, format: 'url'}
+      title: {type: 'string', required: true}
+      alt: {type: 'string', default: @title}
+
+
 
 
 

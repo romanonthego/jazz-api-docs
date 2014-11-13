@@ -138,6 +138,16 @@ Content - это массив карт. тут все просто - они вы
           type: '[array]'
           item: {type: "$photo"}
 
+## tour title card
+    # TODO
+## hotel title card
+    # TODO
+## cottage title card
+    # TODO
+## entetaiment title card
+    # TODO
+
+
 
 
 # Reusable objects

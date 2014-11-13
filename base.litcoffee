@@ -195,6 +195,18 @@ Content - это массив карт. тут все просто - они вы
           ]
 
 
+## media card
+Карта медиа
+    
+    $meadi_card:
+      # ..
+      content:
+        # просто массив типа медиа
+        [
+          item: {type: '$video || $photo_gallery', required: true}
+        ]
+
+
 # Reusable objects
 
 ## photo
@@ -213,6 +225,28 @@ Content - это массив карт. тут все просто - они вы
     $range:
       start: {type: 'number', required: true}
       end: {type: 'number', required: true}
+
+## video
+
+    # видео объект
+    $video
+      description: {type: 'string'}
+      video_id: {type: 'string', required: true}
+      video_provider: {type: 'string', required: true, default: 'vimeo'} 
+
+
+## photo gallery
+
+    # фотогаллерея
+    $photo_gallery:
+      title: {type: 'string', default: 'Фотографии'}
+      description: {type: 'string'}
+      icon: {type: 'string'}
+      photos:
+        [
+          item: {type: '$photo'}
+        ]
+
 
 
 ## inline object

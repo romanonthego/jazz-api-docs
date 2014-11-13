@@ -1,19 +1,19 @@
-# Вцелом
-описание апи вцелом
+# Jazz Api
+
 
 ## Object structures
 базовая структура объекта (рендерится на странице)
 
     tour:
-      meta: {type: 'object', required: true}
-      content: {type: '[array]', required: true} # of cards - will be rendered in order in main panel 
-      aside: {array} # of cards - will be rendered at sidebar
+      meta: {type: '$meta', required: true}
+      content: {type: '$content', required: true} # of cards - will be rendered in order in main panel 
+      aside: {type: '$aside'} # of cards - will be rendered at sidebar
 
 ## Meta structure
 Мета информация об объекте. 
 Будет, в основном включена в head страницы, а так же для валидации урла, и прочее
 
-    meta:
+    $meta:
       # базовая мет-информация
       type: {type: 'string', required: true} # 'tour', 'hotel', 'location' etc
       title: {type: 'string', required: true, maxLength: 80}
@@ -29,7 +29,7 @@
             ammount: {type: 'number', req: true}
         ]
       # Инфа о которой нужно подумать
-      ocupancy: {type: ToDo }
+      ocupancy: {type: TODO }
 
       
       # информация для shema.org - google и прочее
@@ -66,5 +66,32 @@
         price: 
           ammount: {type: 'number'}
           currency: {type: 'string'}
+
+
+
+## Content structure
+content - это массив карт. тут все просто - они выводятся в том порядке в котором переданы. если карта не проходит валидацию или, к примеру, карта запрашивает тип карты еще не реализованый на клиенте - да что угодно - карта пропускается. Таким образом даже если ничего не передано - будет отрендерена почти пустая старница (будет проверятся наличие только title card).Я еще раздумываю над тем включить или нет валидацию для содержимого карт - с одной стороны мы доверяем источнику данных, с другой - качество не гарантируется :(
+
+    $content: 
+      [
+        {type: '$card', required: true}
+      ]
+
+  Сама карта предельно проста:
+
+    $card:
+      type: {type: 'string', required: true}
+      title: {type: 'string'}
+      icon: {type: 'string'}
+      # показывать или нет карту в навигации
+      display_in_menu: {type: 'boolean', default: false}
+      # какая якорная ссылка будет у карты в навигации
+      anchor_link: {type: 'string', default: @type}
+      # тайтл который будет показан в меню
+      menu_title: {type: 'string', default: @title}
+      # собственно контент карты
+      content: {type: 'object', required: true}
+
+
 
 

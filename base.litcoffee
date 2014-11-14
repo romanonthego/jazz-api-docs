@@ -87,11 +87,11 @@ Content - это массив карт. тут все просто - они вы
       title: {type: 'string'}
       icon: {type: 'string'}
       # показывать или нет карту в навигации
-      display_in_menu: {type: 'boolean', default: false}
+      display_in_menu: {type: 'boolean', fallback: false}
       # какая якорная ссылка будет у карты в навигации
-      anchor_link: {type: 'string', default: @type}
+      anchor_link: {type: 'string', fallback: @type}
       # тайтл который будет показан в меню
-      menu_title: {type: 'string', default: @title}
+      menu_title: {type: 'string', fallback: @title}
       
       # собственно контент карты
       # отличается от карты к карте
@@ -153,6 +153,7 @@ Content - это массив карт. тут все просто - они вы
 ## specs card
 Карта "Особенности"
 
+
 # route card
 Карта маршрута тура
 http://take.ms/R9L65
@@ -211,6 +212,78 @@ http://take.ms/BMsiM
         ]
 
 
+## spec card
+Карта "особенности"
+http://take.ms/HWjlw
+
+  $specs_card:
+    #..
+    title: {type: 'string', fallback: "Особенности тура || отеля || коттеджа"}
+    content:
+      specs:
+        [
+          item: {type: '$spec', required: true}
+        ]
+      description:
+        [
+          item: {type: 'string', required: true}
+        ]
+
+
+## documents card
+Карта необходимые документы
+http://take.ms/Njjx2
+
+    $documents_card:
+      #..
+      title: {type: 'string', fallback: "Документы"}
+      content:
+        documents: 
+        [
+          item:
+            description: {type: 'string', required: true}
+            # будет подставлено "входит" или "не входит" в стоимость тура
+            # если не передано - значит без комментариев (как например загранпаспорт)
+            is_included: {type: 'boolean'}
+        ]
+
+
+## services card
+Карта, включено/не включено
+http://take.ms/u0kIq
+
+    $services_card:
+      #..
+      # включает два заголовка - для того что включено и что невключено
+      # title будет проигнорирован
+      included_title: {type: 'string', fallback: 'Включено в стоимость'}
+      for_payment_title: {type: 'string', fallback: 'За отдельную плату'}
+      # вроде бы простая карта но с заморочками
+      # включает два массив - included и for_payment
+      # который в свою очередь включает в себя катагории (подзаголовк и иконка)
+      # и массив собственно услуг :)
+      content:
+        included:
+          [
+            item: 
+              title: {type: 'string', required: true}
+              icon: {type: 'string', required: true}
+              services: 
+                [
+                  item: {type: 'string', required: true}
+                ]
+          ]
+        for_payment:
+          [
+            item: 
+              title: {type: 'string', required: true}
+              icon: {type: 'string', required: true}
+              services: 
+                [
+                  item: {type: 'string', required: true}
+                ]
+          ] 
+
 # Reusable objects
 
 ## photo
@@ -218,7 +291,7 @@ http://take.ms/BMsiM
     $photo:
       url: {type: 'string', required: true, format: 'url'}
       title: {type: 'string', required: true}
-      alt: {type: 'string', default: @title}
+      alt: {type: 'string', fallback: @title}
       # опциональное описание
       # будет выводится в лайтбоксе когда нужно
       description: {type: 'string'}
@@ -226,29 +299,32 @@ http://take.ms/BMsiM
 
 ## range 
 
-    # это объект который задается началом и концом
+это объект который задается началом и концом
+
     $range:
       start: {type: 'number', required: true}
       end: {type: 'number', required: true}
 
 ## video
 
-    # видео объект
-    # http://take.ms/5ekI0
-    $video
+  видео объект
+  http://take.ms/5ekI0
+  
+    $video:
       description: {type: 'string'}
       # мы сами конструируем видео-фрейм на клиенте
       # все что нужно это провайдер (ютуб/вимео) и id видео
       video_id: {type: 'string', required: true}
-      video_provider: {type: 'string', required: true, default: 'vimeo'} 
+      video_provider: {type: 'string', required: true, fallback: 'vimeo'} 
 
 
 ## photo gallery
 
-    # фотогаллерея
-    # http://take.ms/zdeOP
+  фотогаллерея
+  http://take.ms/zdeOP
+  
     $photo_gallery:
-      title: {type: 'string', default: 'Фотографии'}
+      title: {type: 'string', fallback: 'Фотографии'}
       description: {type: 'string'}
       icon: {type: 'string'}
       photos:
@@ -264,13 +340,3 @@ http://take.ms/BMsiM
   или так: http://take.ms/kPSXM
 
   тут задачка посложнее - показать общий интерфей для таких объектов
-
-
-
-
-
-
-
-
-
-

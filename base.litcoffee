@@ -150,11 +150,8 @@ Content - это массив карт. тут все просто - они вы
 ## entetaiment title card
     # TODO
 
-## specs card
-Карта "Особенности"
 
-
-# route card
+## route card
 Карта маршрута тура
 http://take.ms/R9L65
 
@@ -215,6 +212,7 @@ http://take.ms/BMsiM
 ## spec card
 Карта "особенности"
 http://take.ms/HWjlw
+
 
     $specs_card:
       #..
@@ -283,6 +281,94 @@ http://take.ms/u0kIq
                   item: {type: 'string', required: true}
                 ]
           ] 
+
+
+## accomodation card
+Карта размещений
+http://take.ms/wywSu
+сюда же включается 
+http://take.ms/RbENg
+
+причина: размещение не хочется разбивать на комнаты/отели, логичнее держать все в одном
+
+    $accomodation_card:
+      #..
+      title: {type: 'string', required: true, fallback: "Размещение"}
+      content:
+        accomodations: 
+          [
+            item:
+              title: {type: 'string', required: true}
+              stars: {type: 'number'}
+              is_default: {type: 'boolean'}
+              # разница с основной ценой
+              # вот эта самая +100500$
+              # в разных валютах
+              # можно подумать и сделать не диф а ценник полный
+              # формат не меняется, меняется только смысл - передаем или полную ценую
+              diffs:
+                [
+                  item: {type: '$price'}
+                ]
+              # TODO description: {}
+              
+              # виды размещений и комнат
+              # подцепляются как отдельные объекты
+              varianst: 
+                [
+                  item: {type: '$inline_accomodation_variant'}
+                ]
+          ]
+
+## Dates card
+выбор даты
+http://take.ms/mHCGU
+
+    $dates_card
+      #..
+      content:
+        dates:
+          [
+            item:
+              start: {type: 'date', required: true}
+              end: {type: 'date', required: true}
+              # нужно решить - передавать дифы или передавать цены
+              diffs:
+                [
+                  item: {type: '$price'}
+                ]
+          ]
+        # на самом деле довольно адски объект
+        # для отеля может быть не ограничен ибо въехал/выехал
+        # для тура - уже весело. есть ограниченый набор дат вылета
+        # для каждой даты вылета есть свой набор дат возвращения
+        # все это может менятся в зависимости от города вылета
+        # а еще от отеля например...
+        # так что пока базовый вариант
+        user_dates:
+          default
+            departure_date: {type: 'date', required: true}
+            return_date: {type: 'date', required: true}
+          departure_date: {type: 'date', required: true}
+            min: {type: 'date', required: true}
+            max: {type: 'date', required: true}
+          return_date: {type: 'date', required: true}
+            min: {type: 'date', required: true}
+            max: {type: 'date', required: true}
+
+
+## additional services card
+http://take.ms/nmBuA
+    
+    $additional_services_card:
+      # ..
+      content:
+        services: 
+          [
+            item: {type: "$inline_service", required: true}
+          ]
+
+
 
 # Reusable objects
 

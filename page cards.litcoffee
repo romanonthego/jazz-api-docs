@@ -80,6 +80,18 @@ Content - это массив карт. тут все просто - они вы
         {type: '$card', required: true}
       ]
 
+аналогично aside
+
+## Aside
+то же самое:
+
+    
+    aside: 
+      [
+        {type: '$card', required: true}
+      ]
+
+
 
 ## Page cards
 

@@ -1,11 +1,13 @@
-## hotel card
-http://take.ms/YXYox
+## project card
+http://take.ms/RGT5z
 
-    $hotel_card:
-      #...
+    $project_card:
+      #..
       object:
+        # TODO подумать - передавать имя или передавать ID
         id: {type: 'number', required: true}
-        geo_prefix: {type: 'string', required: true, empty: true}
+        # geo_prefix - можно передать, но не требуется
+        geo_prefix: {type: 'string'}
         slug: {type: 'string', required: true, empty: false}
       
       content:
@@ -31,6 +33,13 @@ http://take.ms/YXYox
           # TODO: accomodation:
           # TODO: addtional tags
         description: {type: 'string', required: true}
+        
+        # http://take.ms/D6VH3
+        # в маленьких картах не рендерится поэтому передается отдельно
+        feature_list: 
+          [
+            item: {type: 'string', required: 'true'}
+          ]
         prices: 
           [
             item: {type: '$price'}

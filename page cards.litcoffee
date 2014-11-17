@@ -1,4 +1,4 @@
-## Object structures
+# Object structures
 базовая структура объекта 
 (рендерится на странице)
 
@@ -80,106 +80,27 @@ Content - это массив карт. тут все просто - они вы
         {type: '$card', required: true}
       ]
 
+
+## Page cards
+
 Сама карта предельно проста:
 
     $card:
       type: {type: 'string', required: true}
+      size: {type: 'string', fallback: '2/3'}
+      # поддерживаем версионность карт
+      # на тот случай если заведем более 1 версии какой-то карты - пригодится
+      version: {type: 'string', fallback: '1.0'}
       title: {type: 'string'}
       icon: {type: 'string'}
-      # показывать или нет карту в навигации
-      display_in_menu: {type: 'boolean', fallback: false}
-      # какая якорная ссылка будет у карты в навигации
-      anchor_link: {type: 'string', fallback: @type}
-      # тайтл который будет показан в меню
-      menu_title: {type: 'string', fallback: @title}
+      # если присутсвует объект меню - значит эта карта добавляется в меню
+      menu:
+        # какая якорная ссылка будет у карты в навигации
+        anchor_link: {type: 'string', fallback: @type}
+        # тайтл который будет показан в меню
+        title: {type: 'string', fallback: @title}
       
       # собственно контент карты
       # отличается от карты к карте
       # может быть пустым объектом если нам нужно просто отрендерить карту но инфу мы туда не передаем (почему-то)
       content: {type: '{object}', required: true}
-
-
-
-
-# Сards
-Тут карты туров локаций и всего остального.
-помимо  прочего - передают id/name типа объекта для построения url
-Они не привязаны ни к чему, существуют отдельно.
-
-    $card:
-      # ..
-      type: {type: 'string', required: true}
-      size: {type: 'string', required: true, fallback: "1/3 || 2/3"}
-      object:
-        id: {type: 'number || string', required: true}
-        geo_prefix: {type: 'string', required: true}
-        slug: {type: 'string', required: true, fallback: @title.translit()}
-
-      content:
-        #...
-
-
-
-# Reusable objects
-
-## photo
-   
-    $photo:
-      url: {type: 'string', required: true, format: 'url'}
-      title: {type: 'string', required: true}
-      alt: {type: 'string', fallback: @title}
-      # опциональное описание
-      # будет выводится в лайтбоксе когда нужно
-      description: {type: 'string'}
-
-
-## range 
-
-это объект который задается началом и концом
-
-    $range:
-      start: {type: 'number', required: true}
-      end: {type: 'number', required: true}
-
-## video
-
-  видео объект
-  http://take.ms/5ekI0
-  
-    $video:
-      description: {type: 'string'}
-      # мы сами конструируем видео-фрейм на клиенте
-      # все что нужно это провайдер (ютуб/вимео) и id видео
-      video_id: {type: 'string', required: true}
-      video_provider: {type: 'string', required: true, fallback: 'vimeo'} 
-
-
-## photo gallery
-
-  фотогаллерея
-  http://take.ms/zdeOP
-  
-    $photo_gallery:
-      title: {type: 'string', fallback: 'Фотографии'}
-      description: {type: 'string'}
-      icon: {type: 'string'}
-      photos:
-        [
-          item: {type: '$photo'}
-        ]
-
-
-
-## inline object
-  Объект прицепляемый как "инлайновый" (прошу прощения за тавтологию)
-  Выглядит вот так - http://take.ms/lq21q
-  или так: http://take.ms/kPSXM
-
-  тут задачка посложнее - показать общий интерфей для таких объектов
-
-
-### $inline_accomodation_variant
-TODO
-
-### $inline_service
-TODO

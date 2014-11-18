@@ -14,14 +14,21 @@
 
     $meta:
       # базовая мет-информация
-      type: {type: 'string', required: true} # 'tour', 'hotel', 'location' etc
+      # 'tour', 'hotel', 'location' etc
+      type: {type: 'string', required: true}
+      # на некоторые есть ограничения
       title: {type: 'string', required: true, maxLength: 80}
-      geo_prefix: {type: 'string', required: true} # даже если это пустая строка - все равно очень важно
+      geo_prefix: {type: 'string', required: true}
       slug: {type: 'string', required: true}
       id: {type: 'number || string', required: true}
+      # тут тоже ограничение
       description: {type: 'string', required: true, maxLength: 160}
       keywords: {type: 'string', required: false}
-      image: {type: 'string', required: true, format: 'url'} # абсолютный путь до картинки
+      # абсолютный путь до картинки
+      # не путать с объектом фото
+      # просто картинка 300х300
+      # будет показываться во всех социалках и пр если для них не перегруженно отдельно
+      image: {type: 'string', required: true, format: 'url', fallback: '$jazztour_default_image'}
       
       # массив цен в разных валютах
       prices: 
@@ -30,24 +37,26 @@
             ammount: {type: 'number', req: true}
         ]
       # Инфа о которой нужно подумать
-      ocupancy: {type: TODO }
+      ocсupancy: {type: '$ocсupancy' }
 
       
       # информация для shema.org - google и прочее
       schema:
-        name: {type: 'string'} # будет использован meta.title если не передано
-        description: {type: 'string'} # будет использован meta.description если не передано
-        image: {type: 'string', format: 'url'} # будет использован meta.image если не передано
+        name: {type: 'string', fallback: @title} # будет использован meta.title если не передано
+        description: {type: 'string', fallback: @description} # будет использован meta.description если не передано
+        image: {type: 'string', format: 'url' fallback: @image}
       
       # информация для твиттера и их карт
       # почитать тут - https://dev.twitter.com/cards/overview
       twitter:
-        card: {type: 'string', fallback: 'summary'} # product - для продуктов и summary для всего остального
+        # product - для продуктов и summary для всего остального
+        # summary - по факту "статья" или "страница"
+        card: {type: 'string', fallback: 'summary'}
         site: {type: 'string', fallback: '@Jazztour_ru'} # twitter user
         creator: {type: 'string', fallback: '@Jazztour_ru'}
         domain: {type: 'string', fallback: 'jazztour.ru'}
-        title: {type: 'string'} # будет использован meta.title если не передано
-        description: {type: 'string'} # будет использован meta.description если не передано
+        title: {type: 'string', fallback: @title}
+        description: {type: 'string', fallback: @description} 
         # массив дополнительной информации. поставляется в виде [{label: "Цена", data: "100500руб."}, {...}]
         # хотя бы 2 нужно передать
         data: 
@@ -61,9 +70,9 @@
         type: {type: 'string', fallback: 'article'} 
         title: {type: 'string'}
         url: {type: 'string', format: 'url', fallback: @currentUrl}
-        image: {type: 'string', format: 'url'}
-        description: {type: 'string'}
-        site_name: {type: 'string'}
+        image: {type: 'string', format: 'url', fallback: @image}
+        description: {type: 'string', fallback: @description}
+        site_name: {type: 'string', fallback: "Jazztour"}
         price: 
           ammount: {type: 'number'}
           currency: {type: 'string'}

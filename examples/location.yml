@@ -1,0 +1,23 @@
+# тур
+# страница тура говоря точнее
+tour:
+  meta:
+    type: 'location'
+    #...
+  # в контенте у нас заголовок
+  # пара простых контентных карт
+  # медиа и прочее :)
+  content:
+    - {type: 'title-card'}
+    - {type: 'simple-content-card'}
+    - {type: 'simple-content-card'}
+    - {type: 'media-card'}
+    - {type: 'x_in_y-card', title: 'Туры в эту локацию'}
+    - {type: 'x_in_y-card', title: 'Отели в эту локацию'}
+    - {type: 'articles-card'}
+  # в aside - список дочерних локаций
+  # и пара тур + отель (любимые наверное)
+  aside:
+    - {type: 'locatons-card'}
+    - {type: 'tour'}
+    - {type: 'hotel'}

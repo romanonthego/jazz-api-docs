@@ -10,10 +10,23 @@ http://take.ms/R9L65
           # описание карты - начальные координаты центра, зум, другие настройки
           meta: {type: '{object}'}
           # ноды на карте - координаты, содержимое баблов и прочее
-          # TODO
+          # маршрут отдельно (линия) не передается
+          # он строится на основе waypoints в порядке, в котором они переданы
           waypoints:
-            [
-              item: {type: '$map_point'}
+            [ 
+              # отдельная нода
+              item: 
+                # координаты вид
+                # [-25.363882,131.044922]
+                latlng:
+                  [
+                    lenght: 2
+                    item: {type: 'number', required: true}
+                  ]
+                title: {type: 'string', required: true}
+                # контент содержит готовый html контент
+                # может содержать карткинки :)
+                content: {type: 'string', required: true, format: 'html'}
             ]
         days:
           [

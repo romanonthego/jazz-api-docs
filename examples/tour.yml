@@ -1,0 +1,18 @@
+# тур
+# страница тура говоря точнее
+tour:
+  meta:
+    type: 'tour'
+  content:
+    - {type: 'title-card'}
+    - {type: 'specs-card'}
+    - {type: 'simple-content-card'}
+    - {type: 'route-card'}
+    - {type: 'media-card'}
+    - {type: 'dates-card'}
+    - {type: 'accomodation-card'}
+    - {type: 'services-card'}
+    - {type: 'additional-services-card'}
+    - {type: 'articles-card'}
+  # ничего не передаем в aside
+  aside: []

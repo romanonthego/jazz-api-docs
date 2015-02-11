@@ -5,7 +5,7 @@
     $articles_card:
       title: {type: 'string', required: true}
       content:
-        article: 
+        articles: 
           [
             item: {type: '$inline_article'}
           ] 
